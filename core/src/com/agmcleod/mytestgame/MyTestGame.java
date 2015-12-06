@@ -25,7 +25,8 @@ public class MyTestGame extends ApplicationAdapter {
         textureManager.add("player", "player.png");
         Player player = new Player();
 
-        stage.addActor(new PlayerActor(textureManager.get("player"), player));
+        PlayerActor playerActor = new PlayerActor(textureManager.get("player"), player);
+        stage.addActor(playerActor);
 
         engine.addEntity(player);
     }
