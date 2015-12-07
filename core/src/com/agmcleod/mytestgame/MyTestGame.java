@@ -2,11 +2,14 @@ package com.agmcleod.mytestgame;
 
 import com.agmcleod.mytestgame.Entities.Player;
 import com.agmcleod.mytestgame.actors.PlayerActor;
+import com.agmcleod.mytestgame.systems.MovementSystem;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -18,20 +21,24 @@ public class MyTestGame extends ApplicationAdapter {
     Texture img;
     private Stage stage;
     private TextureManager textureManager;
+    private World world;
 
     @Override
     public void create () {
         engine = new Engine();
         stage = new Stage(new ScreenViewport());
+        world = new World(new Vector2(0, 0), false);
         Gdx.input.setInputProcessor(stage);
         textureManager = new TextureManager();
         textureManager.add("player", "player.png");
-        Player player = new Player();
+        Player player = new Player(world);
 
         PlayerActor playerActor = new PlayerActor(textureManager.get("player"), player);
         stage.addActor(playerActor);
 
         engine.addEntity(player);
+
+        engine.addSystem(new MovementSystem());
     }
 
     @Override
@@ -47,6 +54,8 @@ public class MyTestGame extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         engine.update(dt);
+
+        world.step(1/60f, 6, 2);
 
         stage.act(dt);
         stage.draw();

@@ -1,7 +1,7 @@
 package com.agmcleod.mytestgame.helpers;
 
 import com.agmcleod.mytestgame.components.ComponentMappers;
-import com.agmcleod.mytestgame.components.Transform;
+import com.agmcleod.mytestgame.components.TransformComponent;
 import com.badlogic.ashley.core.Entity;
 
 /**
@@ -9,7 +9,7 @@ import com.badlogic.ashley.core.Entity;
  */
 public abstract class GameEntity extends Entity {
     private boolean dirty = false;
-    public Transform getTransform() {
+    public TransformComponent getTransform() {
         return ComponentMappers.transform.get(this);
     }
 

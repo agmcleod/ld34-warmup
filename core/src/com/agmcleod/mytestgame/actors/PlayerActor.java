@@ -1,7 +1,7 @@
 package com.agmcleod.mytestgame.actors;
 
 import com.agmcleod.mytestgame.Entities.Player;
-import com.agmcleod.mytestgame.components.Transform;
+import com.agmcleod.mytestgame.components.TransformComponent;
 import com.agmcleod.mytestgame.helpers.EntityToScreenCoordinates;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -18,9 +18,9 @@ public class PlayerActor extends Actor {
     public PlayerActor(Texture texture, Player player) {
         this.texture = texture;
         this.player = player;
-        Transform transform = player.getTransform();
+        TransformComponent transformComponent = player.getTransform();
         Vector2 position = EntityToScreenCoordinates.transform(player);
-        this.setBounds(position.x, position.y, transform.width, transform.height);
+        this.setBounds(position.x, position.y, transformComponent.width, transformComponent.height);
     }
 
     @Override
