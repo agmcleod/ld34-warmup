@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MyTestGame extends ApplicationAdapter {
+    public static final float WORLD_TO_BOX = 0.01f;
+    public static final float BOX_TO_WORLD = 100f;
+
     private Engine engine;
     Texture img;
     private Stage stage;
