@@ -31,6 +31,8 @@ public class PhysicsComponent implements Component {
         fixtureDef.friction = 0f;
         fixtureDef.restitution = 0f;
 
+        body.createFixture(fixtureDef);
+
         playerShape.dispose();
     }
 }
