@@ -16,4 +16,8 @@ public abstract class GameEntity extends Entity {
     public boolean isDirty() {
         return dirty;
     }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
 }

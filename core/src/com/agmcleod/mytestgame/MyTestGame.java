@@ -34,10 +34,7 @@ public class MyTestGame extends ApplicationAdapter {
         engine = new Engine();
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
-        stage = new Stage(new ScalingViewport(
-                Scaling.stretch, width, height,
-                new OrthographicCamera(width * WORLD_TO_BOX, height * WORLD_TO_BOX)
-        ));
+        stage = new Stage(new ScalingViewport(Scaling.stretch, width, height));
         cameraCpy = new Matrix4();
         world = new World(new Vector2(0, 0), true);
         Gdx.input.setInputProcessor(stage);
@@ -71,14 +68,12 @@ public class MyTestGame extends ApplicationAdapter {
         engine.update(dt);
 
         stage.act(dt);
-        //stage.draw();
+        stage.draw();
         cameraCpy.set(stage.getCamera().combined);
 
-        debugRenderer.render(world, cameraCpy);
+        debugRenderer.render(world, cameraCpy.scl(BOX_TO_WORLD));
 
         world.step(1/60f, 6, 2);
-
-
     }
 
     @Override

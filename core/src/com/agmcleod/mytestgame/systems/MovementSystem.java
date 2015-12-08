@@ -27,19 +27,23 @@ public class MovementSystem extends EntitySystem {
         entities = engine.getEntitiesFor(Family.all(TransformComponent.class, PhysicsComponent.class).get());
     }
 
-    public void handlePlayerInput(Player player) {
+    public boolean handlePlayerInput(Player player) {
         int keycode = player.getInputKeycode();
+        boolean moved = false;
         if (keycode > -1) {
             PhysicsComponent physicsComponent = ComponentMappers.physics.get(player);
             switch (keycode) {
                 case Input.Keys.A:
-                    physicsComponent.body.setLinearVelocity(-110, 0);
+                    physicsComponent.body.setLinearVelocity(-1, 0);
+                    moved = true;
                     break;
                 default:
                     physicsComponent.body.setLinearVelocity(0, 0);
                     break;
             }
         }
+
+        return moved;
     }
 
     public void update(float deltaTime) {
@@ -48,7 +52,9 @@ public class MovementSystem extends EntitySystem {
 
             if (entity instanceof Player) {
                 Player player = (Player) entity;
-                handlePlayerInput(player);
+                if (handlePlayerInput(player)) {
+                    player.setDirty(true);
+                }
             }
 
             TransformComponent transformComponent = ComponentMappers.transform.get(entity);

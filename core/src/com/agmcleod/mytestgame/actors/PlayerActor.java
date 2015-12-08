@@ -49,6 +49,7 @@ public class PlayerActor extends Actor {
         if (player.isDirty()) {
             Vector2 position = EntityToScreenCoordinates.transform(player);
             this.setPosition(position.x, position.y);
+            player.setDirty(false);
         }
 
         batch.draw(texture, getX(), getY(), getOriginX(), getOriginY(),
