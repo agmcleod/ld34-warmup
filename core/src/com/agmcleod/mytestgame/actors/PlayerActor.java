@@ -29,7 +29,7 @@ public class PlayerActor extends Actor {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (Player.InputKeys.contains(keycode, false)) {
-                    player.setInputState(keycode);
+                    player.setKeyDown(keycode);
                     return true;
                 } else {
                     return false;
@@ -38,7 +38,7 @@ public class PlayerActor extends Actor {
 
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
-                player.setInputState(-1);
+                player.setKeyUp(keycode);
                 return true;
             }
         });

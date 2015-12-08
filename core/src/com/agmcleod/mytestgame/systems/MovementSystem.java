@@ -11,6 +11,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
@@ -28,19 +29,27 @@ public class MovementSystem extends EntitySystem {
     }
 
     public boolean handlePlayerInput(Player player) {
-        int keycode = player.getInputKeycode();
         boolean moved = false;
-        if (keycode > -1) {
-            PhysicsComponent physicsComponent = ComponentMappers.physics.get(player);
-            switch (keycode) {
-                case Input.Keys.A:
-                    physicsComponent.body.setLinearVelocity(-1, 0);
-                    moved = true;
-                    break;
-                default:
-                    physicsComponent.body.setLinearVelocity(0, 0);
-                    break;
-            }
+        PhysicsComponent physicsComponent = ComponentMappers.physics.get(player);
+        Vector2 currentVel = physicsComponent.body.getLinearVelocity();
+        if (player.isMoveLeft()) {
+            physicsComponent.body.setLinearVelocity(-Player.VELOCITY, currentVel.y);
+            moved = true;
+        }
+        if (player.isMoveRight()) {
+            physicsComponent.body.setLinearVelocity(Player.VELOCITY, currentVel.y);
+            moved = true;
+        }
+        if (player.isMoveUp()) {
+            physicsComponent.body.setLinearVelocity(currentVel.x, Player.VELOCITY);
+            moved = true;
+        }
+        if (player.isMoveDown()) {
+            physicsComponent.body.setLinearVelocity(currentVel.x, -Player.VELOCITY);
+            moved = true;
+        }
+        if (!moved) {
+            physicsComponent.body.setLinearVelocity(0, 0);
         }
 
         return moved;

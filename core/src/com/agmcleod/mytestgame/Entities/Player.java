@@ -15,9 +15,16 @@ import com.badlogic.gdx.utils.Array;
  */
 public class Player extends GameEntity {
     public static Array<Integer> InputKeys = new Array<Integer>() {{
-        add(Input.Keys.A); add(Input.Keys.D); add(Input.Keys.S); add(Input.Keys.D);
+        add(Input.Keys.A); add(Input.Keys.D); add(Input.Keys.S); add(Input.Keys.W);
     }};
     private int inputKeycode;
+
+    public static final float VELOCITY = 3;
+
+    private boolean moveUp = false;
+    private boolean moveDown = false;
+    private boolean moveLeft = false;
+    private boolean moveRight = false;
 
     public Player(World world) {
         TransformComponent transformComponent = new TransformComponent();
@@ -29,15 +36,57 @@ public class Player extends GameEntity {
         this.add(new PhysicsComponent(world, this, BodyDef.BodyType.DynamicBody));
     }
 
-    public int getInputKeycode() {
-        return inputKeycode;
-    }
-
     public TransformComponent getTransform() {
         return ComponentMappers.transform.get(this);
     }
 
-    public void setInputState(int keycode) {
-        inputKeycode = keycode;
+    public boolean isMoveUp() {
+        return moveUp;
+    }
+
+    public boolean isMoveDown() {
+        return moveDown;
+    }
+
+    public boolean isMoveLeft() {
+        return moveLeft;
+    }
+
+    public boolean isMoveRight() {
+        return moveRight;
+    }
+
+    public void setKeyDown(int keyCode) {
+        switch (keyCode) {
+            case Input.Keys.A:
+                moveLeft = true;
+                break;
+            case Input.Keys.D:
+                moveRight = true;
+                break;
+            case Input.Keys.W:
+                moveUp = true;
+                break;
+            case Input.Keys.S:
+                moveDown = true;
+                break;
+        }
+    }
+
+    public void setKeyUp(int keyCode) {
+        switch (keyCode) {
+            case Input.Keys.A:
+                moveLeft = false;
+                break;
+            case Input.Keys.D:
+                moveRight = false;
+                break;
+            case Input.Keys.W:
+                moveUp = false;
+                break;
+            case Input.Keys.S:
+                moveDown = false;
+                break;
+        }
     }
 }
